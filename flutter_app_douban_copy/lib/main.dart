@@ -208,7 +208,6 @@ class _HomePageState extends State<HomePage> {
          });
 
         } else {
-
           _refreshController.sendBack(false, RefreshStatus.idle);
           _refreshController.scrollTo(_refreshController.scrollController.offset-100.0); //让刷新消失。
           print("future delayed flag === false");
