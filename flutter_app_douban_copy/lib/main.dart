@@ -141,8 +141,9 @@ class _HomePageState extends State<HomePage> {
 
         textSection,
 
-        ButtonNavToPage(voidCallback: _pressButton), // 使用回调就就可以了？
         Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToiOSPage,titleString: "点击到iOS页面",),),
+
+        ButtonNavToPage(voidCallback: _pressButton), // 使用回调就就可以了？
 //        ChangeBackgroundButton(),
 
         Container(

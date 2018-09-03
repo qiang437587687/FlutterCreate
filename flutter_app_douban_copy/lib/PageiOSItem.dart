@@ -11,6 +11,7 @@ import 'package:quiver/time.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';//导入系统基础包
 import 'package:flutter/services.dart';//导入网络请求相关的包
+import 'package:flutter_app_douban_copy/Const.dart';
 
 //这个常识一下各种iOS控件
 
@@ -52,21 +53,21 @@ class PageIOSScreen extends StatelessWidget {
         case 0:
           return new CupertinoTabView(
             builder: (BuildContext context) {
-              return CupertinoDemoTab1("$index", Colors.red, () { print("$index  leading click"); Navigator.pop(globalContext); }, () { print("$index trailing click"); });
+              return CupertinoDemoTab1("$index", Colors.orange, () { print("$index  leading click"); Navigator.pop(globalContext); }, () { print("$index trailing click"); });
             },
           );
 
         case 1:
           return new CupertinoTabView(
             builder: (BuildContext context) {
-              return CupertinoDemoTab1("$index", Colors.orange, () { print("$index  leading click"); }, () { print("$index trailing click"); });
+              return CupertinoDemoTab1("$index", Colors.yellow, () { print("$index  leading click"); }, () { print("$index trailing click"); });
             },
           );
 
         case 2:
           return new CupertinoTabView(
             builder: (BuildContext context) {
-              return CupertinoDemoTab1("$index", Colors.purple, () { print("$index  leading click"); }, () { print("$index trailing click"); });
+              return MyForm();
             },
           );
       }
@@ -131,37 +132,121 @@ class CupertinoDemoTab1 extends StatelessWidget {
     // TODO: implement build
 
     CupertinoButton lButton = CupertinoButton(child: Text("CupertinoButton"), onPressed: null);
-
+    TimerCounter timer = TimerCounter();
     //这个控件直接放在leading上面会有一些位置移动，这里就需要用一个控件进行包裹，设定好位置之后再放到上面。
     GestureDetector ges = GestureDetector(onTap: leadingCallback ,child: Text("back"),);
     //用控件包裹了，这里面的Factor貌似是拉伸度，
     Align ali = Align(widthFactor: 1.0,alignment: Alignment.center,child: ges,);
 
+    final myController = TextEditingController();
+//    TextField tellField = TextField(
+//      controller: myController,
+//    );
+
+    _onTextFieldChanged(String str) {
+        Logger("changed str", str);
+
+        if (str == "zhang") {
+          timer.start();
+        } else {
+          timer.stop();
+          Logger("_onTextFieldChanged", "stop");
+        }
+
+    }
+
+
+    // material  such as a Card,  Dialog, Drawer, or Scaffold.
+
+    /*
+        Key key,
+    this.controller,
+    this.focusNode,
+    this.decoration = const InputDecoration(),
+    TextInputType keyboardType,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.style,
+    this.textAlign = TextAlign.start,
+    this.autofocus = false,
+    this.obscureText = false,
+    this.autocorrect = true,
+    this.maxLines = 1,
+    this.maxLength,
+    this.maxLengthEnforced = true,
+    this.onChanged,
+    this.onEditingComplete,
+    this.onSubmitted,
+    this.inputFormatters,
+    this.enabled,
+    this.cursorWidth = 2.0,
+    this.cursorRadius,
+    this.cursorColor,
+    this.keyboardAppearance,
+    this.scrollPadding = const EdgeInsets.all(20.0),
+    * */
+    Drawer dw = Drawer(child: TextField(controller: myController,autocorrect: false,onChanged: _onTextFieldChanged,));
+    Card card = Card(child: TextField(controller: myController,autocorrect: false,onChanged: _onTextFieldChanged,),color: Colors.purple,);
+    MyForm from = MyForm();
+    Container contain =  Container(child: card,width: 100.0,height: 300.0,);
+
+    List<Widget> weights = <Widget>[Text(name,textAlign: TextAlign.center,style: styleBlack,),timer,contain];
+
     return CupertinoPageScaffold(
 
       navigationBar: CupertinoNavigationBar(
         //这种方法不太好啊~
-        leading: Container(child: Text("123"),alignment: Alignment.center,width: 44.0,height: 44.0,),
+        leading: Container(child: Text("123",textAlign: TextAlign.center,),alignment: Alignment.center,width: 44.0,height: 44.0,),
         middle: Text(name),
         trailing: ali,
       ),
 //
-      child: new GestureDetector(onTapUp: (tap) {
-        print("tap up up up");
-      },
-        child: Container(color: color,child: new Center(child: ListView(children: <Widget>[Text(name),TimerCounter()],)),),
-      ) ,
+      child: Container(alignment: Alignment.center,color: color,child: Center(child: ListView(children: weights,)),)
+
+
+//      new GestureDetector(onTapUp: (tap) {
+//        print("tap up up up");
+//        //首先停止一下
+//        if (timer.timerISActive) {
+//          timer.stop();
+//        } else {
+//          timer.start();
+//        }
+//      },
+//        child: ,
+//
+//      ),
+
 
     );
+
+
+
   }
 }
 
 
 class TimerCounter extends StatefulWidget {
+
+  bool timerISActive = false;
+
+  TimerState state = TimerState();
+
+  start() {
+    Logger("TimerCounter start", "in start");
+    Logger("state", state);
+    state._startTimer();
+  }
+
+  stop() {
+    state._stopTimer();
+  }
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return TimerState();
+    start();
+    return state;
   }
 }
 
@@ -172,27 +257,36 @@ class TimerState extends State<TimerCounter> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _startTimer();
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Text("$time");
+
+    Align aliinin = Align(widthFactor: 1.0,alignment: Alignment.center,child: Container(child: Text("$time",textAlign: TextAlign.center,style: styleBlack,),width: 200.0,height: 100.0,padding: const EdgeInsets.all(10.0),color: Colors.green,),);
+
+    return aliinin;
   }
 
   _startTimer() {
-
-    timer = Timer.periodic(Duration(seconds: 1), (t) {
-
+    Logger("--", "_startTimer");
+    timer = Timer.periodic(Duration(seconds: 5), (t) {
       setState(() {
-        Logger("ttt", t);
+        widget.timerISActive = true;
+        Logger("tick number : ", t);
         Logger("timer", time);
         time ++;
       });
 
     });
 
+  }
+
+  _stopTimer() {
+    Logger("--", "_stopTimer");
+    widget.timerISActive = false;
+    Logger("timer", timer);
+    timer.cancel();
   }
 
   @override
@@ -204,3 +298,61 @@ class TimerState extends State<TimerCounter> {
   }
 
 }
+
+
+class MyForm extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _MyFormState();
+  }
+
+}
+
+class _MyFormState extends State<MyForm> {
+  // Create a text controller and use it to retrieve the current value.
+  // of the TextField!
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when disposing of the Widget.
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Retrieve Text Input'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: TextField(
+          controller: myController,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        // When the user presses the button, show an alert dialog with the
+        // text the user has typed into our text field.
+        onPressed: () {
+           showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                // Retrieve the text the user has typed in using our
+                // TextEditingController
+                content: Text(myController.text),
+              );
+            },
+          );
+        },
+        tooltip: 'Show me the value!',
+        child: Icon(Icons.text_fields),
+      ),
+    );
+  }
+}
+
