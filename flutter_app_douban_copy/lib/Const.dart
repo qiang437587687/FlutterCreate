@@ -13,8 +13,10 @@ import 'package:flutter/material.dart';//导入系统基础包
 import 'package:flutter/services.dart';//导入网络请求相关的包
 
 typedef void BoolCallback(bool f);
+typedef void StringCallback(String string);
 
-TextStyle styleBlack = TextStyle(
+
+const TextStyle styleBlack = TextStyle(
   color: Colors.black,
   decoration: TextDecoration.none,
   fontSize: 24.0,

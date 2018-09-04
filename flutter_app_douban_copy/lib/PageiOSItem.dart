@@ -12,7 +12,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';//导入系统基础包
 import 'package:flutter/services.dart';//导入网络请求相关的包
 import 'package:flutter_app_douban_copy/Const.dart';
-
+import 'package:flutter_app_douban_copy/toolsTimer.dart';
 //这个常识一下各种iOS控件
 
 /*
@@ -132,7 +132,6 @@ class CupertinoDemoTab1 extends StatelessWidget {
     // TODO: implement build
 
     CupertinoButton lButton = CupertinoButton(child: Text("CupertinoButton"), onPressed: null);
-    TimerCounter timer = TimerCounter();
     //这个控件直接放在leading上面会有一些位置移动，这里就需要用一个控件进行包裹，设定好位置之后再放到上面。
     GestureDetector ges = GestureDetector(onTap: leadingCallback ,child: Text("back"),);
     //用控件包裹了，这里面的Factor貌似是拉伸度，
@@ -147,9 +146,7 @@ class CupertinoDemoTab1 extends StatelessWidget {
         Logger("changed str", str);
 
         if (str == "zhang") {
-          timer.start();
         } else {
-          timer.stop();
           Logger("_onTextFieldChanged", "stop");
         }
 
@@ -188,9 +185,20 @@ class CupertinoDemoTab1 extends StatelessWidget {
     Drawer dw = Drawer(child: TextField(controller: myController,autocorrect: false,onChanged: _onTextFieldChanged,));
     Card card = Card(child: TextField(controller: myController,autocorrect: false,onChanged: _onTextFieldChanged,),color: Colors.purple,);
     MyForm from = MyForm();
-    Container contain =  Container(child: card,width: 100.0,height: 300.0,);
+    Container contain =  Container(child: card,width: 100.0,height: 50.0,);
 
-    List<Widget> weights = <Widget>[Text(name,textAlign: TextAlign.center,style: styleBlack,),timer,contain];
+    //这一块是封装的定时器的
+    /**/
+    ToolsTimer timerr = ToolsTimer((str) {
+      Logger(" timer str ", str);
+    });
+    _pressCurrent() {
+      timerr.stopOrStart();
+    }
+    RaisedButton button = RaisedButton(onPressed: _pressCurrent,child: Text("点击停止或者开始"),);
+
+
+    List<Widget> weights = <Widget>[Text(name,textAlign: TextAlign.center,style: styleBlack,),contain,timerr,button];
 
     return CupertinoPageScaffold(
 
@@ -226,80 +234,6 @@ class CupertinoDemoTab1 extends StatelessWidget {
 }
 
 
-class TimerCounter extends StatefulWidget {
-
-  bool timerISActive = false;
-
-  TimerState state = TimerState();
-
-  start() {
-    Logger("TimerCounter start", "in start");
-    Logger("state", state);
-    state._startTimer();
-  }
-
-  stop() {
-    state._stopTimer();
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    start();
-    return state;
-  }
-}
-
-class TimerState extends State<TimerCounter> {
-  int time = 123;
-  Timer timer;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-
-    Align aliinin = Align(widthFactor: 1.0,alignment: Alignment.center,child: Container(child: Text("$time",textAlign: TextAlign.center,style: styleBlack,),width: 200.0,height: 100.0,padding: const EdgeInsets.all(10.0),color: Colors.green,),);
-
-    return aliinin;
-  }
-
-  _startTimer() {
-    Logger("--", "_startTimer");
-    timer = Timer.periodic(Duration(seconds: 5), (t) {
-      setState(() {
-        widget.timerISActive = true;
-        Logger("tick number : ", t);
-        Logger("timer", time);
-        time ++;
-      });
-
-    });
-
-  }
-
-  _stopTimer() {
-    Logger("--", "_stopTimer");
-    widget.timerISActive = false;
-    Logger("timer", timer);
-    timer.cancel();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    timer.cancel();
-    Logger("cancel", "ccc");
-  }
-
-}
-
-
 class MyForm extends StatefulWidget {
 
   @override
@@ -310,6 +244,7 @@ class MyForm extends StatefulWidget {
 
 }
 
+//这个是输入框，
 class _MyFormState extends State<MyForm> {
   // Create a text controller and use it to retrieve the current value.
   // of the TextField!
