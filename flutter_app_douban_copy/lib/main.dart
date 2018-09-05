@@ -11,6 +11,7 @@ import 'package:flutter_app_douban_copy/utils/donate.dart';
 import 'package:flutter_app_douban_copy/Const.dart';
 import 'package:flutter_app_douban_copy/PageiOSItem.dart';
 import 'package:flutter_app_douban_copy/valueAndPageNav.dart';
+import 'package:flutter_app_douban_copy/pushTest.dart';
 
 void main() => runApp(new MyApp());
 
@@ -142,6 +143,8 @@ class _HomePageState extends State<HomePage> {
 
         textSection,
 
+        Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToValueTransform,titleString: "点击测试传值传值传值传值",),),
+
         Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToTestPage,titleString: "点击测试界面",),),
 
         Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToiOSPage,titleString: "点击到iOS页面",),),
@@ -240,6 +243,13 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       new MaterialPageRoute(builder: (context) => new SecondScreen()),
+    );
+  }
+
+  _navigationToValueTransform() { //PlatformChannel
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new PlatformChannel()),
     );
   }
 
