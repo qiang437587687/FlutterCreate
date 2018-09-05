@@ -189,9 +189,9 @@ class CupertinoDemoTab1 extends StatelessWidget {
 
     //这一块是封装的定时器的
     /**/
-    ToolsTimer timerr = ToolsTimer((str) {
+    ToolsTimer timerr = ToolsTimer(callback: (str) {
       Logger(" timer str ", str);
-    });
+    },);
     _pressCurrent() {
       timerr.stopOrStart();
     }

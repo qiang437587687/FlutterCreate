@@ -18,7 +18,9 @@ import 'package:flutter_app_douban_copy/Const.dart';
 // 封装一个定时器。
 class ToolsTimer extends StatefulWidget { //这里注意写上final 要不然会提示分析错误。
 
-  ToolsTimer(this.callback,{this.textStyle = styleBlack});
+//  ToolsTimer(this.callback,{this.textStyle = styleBlack});
+
+  ToolsTimer({Key key, @required this.callback,this.textStyle = styleBlack}) : super(key: key);
 
   final StringCallback callback;
 

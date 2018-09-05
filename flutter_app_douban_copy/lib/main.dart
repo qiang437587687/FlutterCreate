@@ -10,6 +10,7 @@ import "package:pull_to_refresh/pull_to_refresh.dart";
 import 'package:flutter_app_douban_copy/utils/donate.dart';
 import 'package:flutter_app_douban_copy/Const.dart';
 import 'package:flutter_app_douban_copy/PageiOSItem.dart';
+import 'package:flutter_app_douban_copy/valueAndPageNav.dart';
 
 void main() => runApp(new MyApp());
 
@@ -141,6 +142,8 @@ class _HomePageState extends State<HomePage> {
 
         textSection,
 
+        Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToTestPage,titleString: "点击测试界面",),),
+
         Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToiOSPage,titleString: "点击到iOS页面",),),
 
         ButtonNavToPage(voidCallback: _pressButton), // 使用回调就就可以了？
@@ -225,6 +228,8 @@ class _HomePageState extends State<HomePage> {
 
   _actionPress() {
     //
+
+
     print("弹到拎一个位置");
     Navigator.pop(context);
     setState(() {
@@ -244,7 +249,15 @@ class _HomePageState extends State<HomePage> {
       new MaterialPageRoute(builder: (context) => new PageIOSScreen()),
     );
   }
-  
+
+  _navigationToTestPage() {
+    Navigator.push(
+      context,
+
+      new MaterialPageRoute(builder: (context) => ValueAndPageNav(sendBackClosure: (str) { Logger("返回的str", str); }))
+
+    );
+  }
   _pressButton() {
     //先搞一个 网络请求试试。
 
