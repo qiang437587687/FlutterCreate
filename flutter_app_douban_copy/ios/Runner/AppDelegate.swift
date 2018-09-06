@@ -3,6 +3,9 @@ import Flutter
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
+    
+    var eventSink:FlutterEventSink?
+    
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
@@ -26,8 +29,24 @@ import Flutter
         }
     });
     
+    let eventChannel =  FlutterEventChannel.init(name: "samples.flutter.io/charging", binaryMessenger: controller);
+    eventChannel.setStreamHandler(self);
+    
+    actionAfterSecond(sec: 5);
+    
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+}
+
+extension AppDelegate {
+    
+    func actionAfterSecond(sec:Int) {
+        perform(#selector(action), with: nil, afterDelay: TimeInterval.init(sec));
+    }
+    
+    @objc func action() {
+        self.eventSink?("Second")
+    }
 }
 
 func jumpTest(result: FlutterResult) {
@@ -47,3 +66,25 @@ private func receiveBatteryLevel(result: FlutterResult) {
         result(Int(device.batteryLevel * 100));
     }
 }
+
+extension AppDelegate : FlutterStreamHandler {
+    func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        self.eventSink = nil;
+        return nil;
+    }
+    
+    
+    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        self.eventSink = events;
+        
+        return nil;
+        
+    }
+    
+}
+
+
+
+
+
+
