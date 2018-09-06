@@ -30,7 +30,6 @@ class _PlatformChannelState extends State<PlatformChannel> {
     });
   }
 
-
   Future<Null> _jumpTest() async {
     String back;
     try {

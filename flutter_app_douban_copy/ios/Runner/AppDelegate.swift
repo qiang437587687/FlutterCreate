@@ -6,6 +6,8 @@ import Flutter
     
     var eventSink:FlutterEventSink?
     
+    var comprehensiveFlutterViewController:FlutterViewController!
+    
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?

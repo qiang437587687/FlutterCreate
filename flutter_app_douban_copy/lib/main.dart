@@ -12,6 +12,7 @@ import 'package:flutter_app_douban_copy/Const.dart';
 import 'package:flutter_app_douban_copy/PageiOSItem.dart';
 import 'package:flutter_app_douban_copy/valueAndPageNav.dart';
 import 'package:flutter_app_douban_copy/pushTest.dart';
+import 'package:flutter_app_douban_copy/musicPage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -127,8 +128,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   _getBody(BuildContext context) {
-
+    //这里使用index作为点击的标识。
     globalContext = context;
+
+    switch (index) {
+      case 1:
+        return myCopyMusicPage();
+
+      default:
+        return myCostumeMothod();
+    }
+
+  }
+
+  // 这个是我自己写的控件测试的相关方法等
+  Widget myCostumeMothod() {
     var list =  ListView(
       children: <Widget>[
         //搞一个网络加载图片。
@@ -165,7 +179,7 @@ class _HomePageState extends State<HomePage> {
             Text("niubi",textAlign: TextAlign.right),
             Text("nimei"),],
 
-            ),
+          ),
           ),
           padding: const EdgeInsets.all(10.0),
           color: Colors.orange,
@@ -182,7 +196,6 @@ class _HomePageState extends State<HomePage> {
     var con = Container(padding: const EdgeInsets.all(10.0),child: newRefresh,color: Colors.white,);
 
     return con;
-
   }
 
 
@@ -268,6 +281,7 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
+
   _pressButton() {
     //先搞一个 网络请求试试。
 
@@ -279,12 +293,12 @@ class _HomePageState extends State<HomePage> {
       print("开始请求网络了");
     },
       onSuccess: (String body) {
-        print("数据是\n ======> ");
         print(body);
         //数据怎么解析成对象?????
         var s = json.decode(body);
         Logger.log("解析后的对象", s);
         List<Movie> mList =  JsonDecode.movieList(s);
+        print("数据是\n ======> ");
         Movie m1 = mList[0];
         Logger.log("m1.title", m1.title);
         Logger.log("m1.directors", m1.directors);
@@ -368,6 +382,10 @@ Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese Alps. Situate
     ),
   );
 
+  //我这里用来仿豆瓣的music页面
+  Widget myCopyMusicPage() {
+    return MusicPage();
+  }
 
 }
 
