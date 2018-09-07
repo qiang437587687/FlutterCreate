@@ -17,7 +17,7 @@ class MusicPageModel {
     Document doc = parse(html);
 //    Logger("doc", doc);
     var body = doc.body;
-    Logger("body",body);
+    Logger("MusicPageModel body",body);
     List<MusicBanner> bannerList = [];
     var slickList = body.getElementsByClassName('top-banner');
     if (slickList.length > 0) {
@@ -32,7 +32,9 @@ class MusicPageModel {
           imageAddress = imgItem.attributes['src'];
         }
         bannerList.add(MusicBanner(address, imageAddress));
+
       });
+      Logger("slickList in local",bannerList);
     }
 
 

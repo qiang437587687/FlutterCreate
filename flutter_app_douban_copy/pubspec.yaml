@@ -12,6 +12,8 @@ dependencies:
   pull_to_refresh: ^1.1.5
   json_annotation: ^0.2.3
   html: ^0.13.3
+  url_launcher: "^3.0.1"
+  share: "0.5.1"
 
 dev_dependencies:
   flutter_test:
