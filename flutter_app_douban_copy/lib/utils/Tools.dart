@@ -2,6 +2,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+const bool UIDebug = true;
+
+Color debugColor(Color color) {
+  return UIDebug ? color : null;
+}
+
 //显示加载转圈
 class LoadingProgress extends StatelessWidget {
   getProgressDialog() {

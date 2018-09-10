@@ -121,6 +121,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _movieTab() { //这个是上面的appbar的bottom
+
+    if (index == 1) { //这样来调节上面的 Navigation 里面的Tab；
+      return null;
+    }
+
     return TabBar(
       isScrollable: false,
       tabs: <Widget>[Tab(text: "tab1",icon: Icon(Icons.movie)),Tab(text: "tab2",icon: Icon(Icons.book)),Tab(text: "tab3",icon: Icon(Icons.info))],
@@ -199,7 +204,6 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-
   _raisedButtonClick() {
     Logger.log("测试", "_raisedButtonClick");
   }
@@ -239,7 +243,6 @@ class _HomePageState extends State<HomePage> {
         }
     });
   }
-
 
 
   _actionPress() {
