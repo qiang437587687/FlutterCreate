@@ -46,7 +46,7 @@ class HomePage extends StatefulWidget {
 }
 
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   int index = 0;
 
   RefreshController _refreshController;
@@ -56,6 +56,8 @@ class _HomePageState extends State<HomePage> {
   String imageUrl = ""; //这里是需要后面请求后加载
 
   RaisedButton button;
+
+  AnimationController controller;
 
   Image topImage = Image.asset(
     'images/lake.jpg',
@@ -79,7 +81,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     _refreshController = new RefreshController();
+    controller = new AnimationController(
+        vsync: this, duration: new Duration(milliseconds: 100), value: 1.0);
     super.initState();
+  }
+
+  bool get isPanelVisible {
+    final AnimationStatus status = controller.status;
+    return status == AnimationStatus.completed ||
+        status == AnimationStatus.forward;
   }
 
   @override
@@ -93,6 +103,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("title+$index", style: style,),
         bottom: _movieTab(),
+        leading: new IconButton(icon: new AnimatedIcon(icon: AnimatedIcons.menu_home,progress: controller.view,), onPressed: (){
+          controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
+        }),
       ),
       body: new Builder(builder: (BuildContext context) {
         return _getBody(context);

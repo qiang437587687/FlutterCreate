@@ -13,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 import 'dart:async';
 
+import 'package:flutter_app_douban_copy/musicInfoPage.dart';
+
 export 'package:url_launcher/url_launcher.dart';
 
 enum LoadState {
@@ -224,7 +226,11 @@ class _MusicPageState extends State<MusicPage> {
   }
 
   _navigationToInfo(String address) {
-
+    Logger("_navigationToInfo", "");
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => MusicInfo(
+          address: address,
+        )));
   }
 
   _loadPlay(String address) async {
