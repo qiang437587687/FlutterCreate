@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-const bool UIDebug = true;
+const bool UIDebug = false;
 
 Color debugColor(Color color) {
   return UIDebug ? color : null;

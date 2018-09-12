@@ -55,7 +55,7 @@ class _MusicInfoState extends State<MusicInfo> {
       );
     }
   }
-  
+
   _getBody() {
 
     return Stack(
@@ -82,26 +82,92 @@ class _MusicInfoState extends State<MusicInfo> {
         * */
 
         BackdropFilter(filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
-                       child: DecoratedBox(decoration: BoxDecoration(color: Colors.transparent,borderRadius: BorderRadius.circular(500.0))),
+                       child: DecoratedBox(decoration: BoxDecoration(color: Colors.transparent,borderRadius: BorderRadius.all(const Radius.circular(8.0)))),
         ),
 
-//        Center(
-//          child: Container(
-//            margin: const EdgeInsets.all(4.0),
-//            alignment: Alignment.centerLeft,
-//            decoration: BoxDecoration(
-//              borderRadius: BorderRadius.all(const Radius.circular(8.0)),
-//              color: Colors.grey.shade600.withOpacity(0.5),
-//            ),
-//            child: Text("ttt"),
-//          ),
-//        )
+        Center(
+          child: Container(
+            margin: const EdgeInsets.all(4.0),
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(const Radius.circular(80.0)),
+              color: Colors.grey.shade600.withOpacity(0.3),
+            ),
+
+            child: CustomScrollView(
+              slivers: <Widget>[
+                    SliverAppBar(
+                      pinned: true,
+                      expandedHeight: _appBarHeight,
+                      backgroundColor: Colors.transparent,
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(result.name ?? "名字暂缺"),
+                        background: Stack(
+                          fit: StackFit.expand,
+                          children: <Widget>[
+                            Image.network(result.image,fit: BoxFit.cover,height: _appBarHeight,)
+                          ],
+                        ),
+                      ),
+
+                      actions: <Widget>[
+                        IconButton(icon: Icon(Icons.info), onPressed: () {
+                          _showInfoBottomSheet();
+                        }),
+
+                      ],
+                      floating: false,
+                      snap: false,
+
+                    ),
+                  
+                  SliverPadding(
+                      padding: const EdgeInsets.all(4.0),
+                      sliver: SliverList(delegate: SliverChildListDelegate(_getCommentList())),
+                  )
+                
+              ],
+            ),
+
+
+          ),
+        )
 
       ],
     );
-    
   }
-  
+
+  List<Widget> _getCommentList() {
+    List<Widget> list = [
+      ListTile(
+        title: Text('介绍',
+            style: Theme.of(context).textTheme.title.copyWith(
+              color: Colors.white,
+            )),
+      ),
+      Text(
+        result.indent.isEmpty ? '    暂无介绍' : result.indent,
+        style: Theme.of(context).textTheme.body1.copyWith(
+          color: Colors.white,
+        ),
+      ),
+      ListTile(
+        title: Text('曲目',
+            style: Theme.of(context).textTheme.title.copyWith(
+              color: Colors.white,
+            )),
+      ),
+      Text(
+        result.introContent.isEmpty ? '   暂无曲目' : result.introContent,
+        style: Theme.of(context).textTheme.body1.copyWith(
+          color: Colors.white,
+        ),
+      ),
+    ];
+    return list;
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -114,6 +180,81 @@ class _MusicInfoState extends State<MusicInfo> {
     // TODO: implement build
     return new Scaffold(body: result == null ? _getLoading() : _getBody(),);
   }
+
+
+  List<Widget> _getTextList() {
+    List<Widget> widgetList = [];
+    if (result.otherName != null && result.otherName.isNotEmpty) {
+      widgetList.add(_getText(result.otherName));
+    }
+    if (result.author != null && result.author.isNotEmpty) {
+      widgetList.add(_getText(result.author));
+    }
+    if (result.schools != null && result.schools.isNotEmpty) {
+      widgetList.add(_getText(result.schools));
+    }
+    if (result.Album != null && result.Album.isNotEmpty) {
+      widgetList.add(_getText(result.Album));
+    }
+    if (result.medium != null && result.medium.isNotEmpty) {
+      widgetList.add(_getText(result.medium));
+    }
+    if (result.releaseTime != null && result.releaseTime.isNotEmpty) {
+      widgetList.add(_getText(result.releaseTime));
+    }
+    if (result.publisher != null && result.publisher.isNotEmpty) {
+      widgetList.add(_getText(result.publisher));
+    }
+    if (result.recordsNumber != null && result.recordsNumber.isNotEmpty) {
+      widgetList.add(_getText(result.recordsNumber));
+    }
+    if (result.barCode != null && result.barCode.isNotEmpty) {
+      widgetList.add(_getText(result.barCode));
+    }
+    if (result.isrc != null && result.isrc.isNotEmpty) {
+      if (result.isrc.contains('\n')) {
+        List<String> isrcs = result.isrc.split('\n');
+        widgetList.addAll(isrcs.map((s) => _getText(s)));
+      } else {
+        widgetList.add(_getText(result.isrc));
+      }
+    }
+    return widgetList;
+  }
+
+  _getText(String text) {
+    return ListTile(
+      title: Text(
+        text,
+        style: Theme.of(context).textTheme.body1,
+      ),
+      leading: Icon(Icons.info_outline),
+    );
+  }
+
+
+  _showInfoBottomSheet() {
+    List<Widget> items = _getTextList();
+    Logger("_showInfoBottomSheet items", items);
+    showModalBottomSheet(context: context, builder: (BuildContext context) {
+
+      return Drawer(
+        child: ListView.builder(itemBuilder: (context, index) {
+          return items[index];
+        },
+          itemCount: items.length,
+        ),
+
+      );
+
+    }
+
+    );
+  }
+
+
+
+
 }
 
 

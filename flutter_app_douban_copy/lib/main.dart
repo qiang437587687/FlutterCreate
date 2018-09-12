@@ -103,13 +103,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       appBar: AppBar(
         title: Text("title+$index", style: style,),
         bottom: _movieTab(),
-        leading: new IconButton(icon: new AnimatedIcon(icon: AnimatedIcons.menu_home,progress: controller.view,), onPressed: (){
+        leading: new IconButton(icon: new AnimatedIcon(icon: AnimatedIcons.close_menu,progress: controller.view,), onPressed: (){
           controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
+          Logger("current isPanelVisible", isPanelVisible);
         }),
       ),
+
       body: new Builder(builder: (BuildContext context) {
         return _getBody(context);
       }),
+
       bottomNavigationBar: _getBottomNavigationBar(),
     );
 

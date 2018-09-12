@@ -32,7 +32,7 @@ class MusicPage extends StatefulWidget {
 
   @override
   _MusicPageState createState() => _MusicPageState();
-  
+
 }
 
 class _MusicPageState extends State<MusicPage> {
@@ -145,7 +145,7 @@ class _MusicPageState extends State<MusicPage> {
         ),
       );
     });
-    
+
     return SliverPersistentHeader(delegate: SliverBanner(childs: widgets));
   }
 
@@ -173,11 +173,60 @@ class _MusicPageState extends State<MusicPage> {
       SliverList(delegate: SliverChildListDelegate([
         _get250Widget(),
       ])),
+      SliverTitle(widget.data.editList.title),
+      SliverList(
+        delegate: SliverChildListDelegate([
+          _getEditWidget(),
+        ]),
+      ),
 //      Text(widget.data.m250List.title),
     ];
 //    widgets.addAll(_getFashionWidget());
 
     return widgets;
+  }
+
+  _getEditWidget() {
+    List<Widget> editList = new List.generate(widget.data.editList.itemList.length, (index) {
+      MusicEditItem musicedititem = widget.data.editList.itemList[index];
+      return new GestureDetector(
+        onTap: () => _getInfo(widget.data.editList.itemList[index].address),
+        child: Padding(
+            padding:const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Card(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.network(musicedititem.imageAddress),
+                  Container(
+                    child: Text(musicedititem.name,style: Theme.of(context).textTheme.title,),
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    child: Text(musicedititem.des,style: Theme.of(context).textTheme.body2,),
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    width: 150.0,
+                    padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 8.0),
+                    child: Text(musicedititem.summery,style: Theme.of(context).textTheme.body2,),
+                    alignment: Alignment.center,
+                  ),
+                ],
+              ),
+            ),
+        ),
+      );
+    });
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: editList,
+      ),
+    );
+
   }
 
 
@@ -220,6 +269,17 @@ class _MusicPageState extends State<MusicPage> {
 
   }
 
+  _getFashionWidget() {
+    List<Widget> widgets = [];
+    Logger("widget.data.fashionList length", widget.data.fashionList.length);
+    widget.data.fashionList.forEach((e) {
+      widgets.add(SliverTitle(e.title));
+      widgets.add(SliverGrid(delegate: SliverChildBuilderDelegate((BuildContext context,index) {
+        return
+      }, gridDelegate: null)))
+    });
+  }
+
   _getInfo(String address) {
     Logger("get info address", address);
     address.contains("play") ? _loadPlay(address) : _navigationToInfo(address);
@@ -234,6 +294,7 @@ class _MusicPageState extends State<MusicPage> {
   }
 
   _loadPlay(String address) async {
+    Logger("_loadPlay", "");
     if (await canLaunch(address)) {
       launch(address, forceWebView: false);
     }
@@ -297,7 +358,7 @@ class SliverTitleDelegate extends SliverPersistentHeaderDelegate {
 class SliverBanner extends SliverPersistentHeaderDelegate {
   SliverBanner({@required this.childs});
   final List<Widget> childs;
-  
+
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     // TODO: implement build
@@ -309,15 +370,15 @@ class SliverBanner extends SliverPersistentHeaderDelegate {
         ),
     );
   }
-  
+
   @override
   // TODO: implement maxExtent
   double get maxExtent => 200.0;
-  
+
   @override
   // TODO: implement minExtent
   double get minExtent => 0.0;
-  
+
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     // TODO: implement shouldRebuild
@@ -401,10 +462,6 @@ class _ViewPageState extends State<ViewPager> {
   }
 
 }
-
-
-
-
 
 
 
