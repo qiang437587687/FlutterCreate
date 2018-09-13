@@ -99,9 +99,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       color: Colors.red, fontWeight: FontWeight.w700,);
 //    return TabController(length: null, vsync: null) //神奇啊
 
+
+
     _scaffold = Scaffold(
       appBar: AppBar(
-        title: Text("title+$index", style: style,),
+        title: Text(_topAndBottomTitle(index), style: style,),
         bottom: _movieTab(),
         leading: new IconButton(icon: new AnimatedIcon(icon: AnimatedIcons.close_menu,progress: controller.view,), onPressed: (){
           controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
@@ -122,10 +124,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 
+  _topAndBottomTitle(int indexx) {
+    switch (indexx) {
+      case 0:
+        return "首页";
+      case 1:
+        return "音乐";
+      case 2:
+        return "未知的";
+
+    }
+  }
 
   _getBottomNavigationBar() {
-    List<BottomNavigationBarItem> items = List<BottomNavigationBarItem>.generate(3, (index) {
-        return BottomNavigationBarItem(icon: Icon(Icons.print), title: Text("text+$index"));
+    List<BottomNavigationBarItem> items = List<BottomNavigationBarItem>.generate(3, (ind) {
+        return BottomNavigationBarItem(icon: Icon(Icons.print), title: Text(_topAndBottomTitle(ind)));
     });
     return BottomNavigationBar(
         onTap: _selectPosition,
