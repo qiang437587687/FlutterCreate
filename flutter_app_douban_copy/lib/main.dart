@@ -100,7 +100,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 //    return TabController(length: null, vsync: null) //神奇啊
 
 
-
     _scaffold = Scaffold(
       appBar: AppBar(
         title: Text(_topAndBottomTitle(index), style: style,),
@@ -109,6 +108,33 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
           Logger("current isPanelVisible", isPanelVisible);
         }),
+      ),
+
+      drawer: Drawer(
+        elevation: 8.0,//一会试一下，怎么回事
+        semanticLabel: "滑动抽屉", // 一会看看是哪个string
+        child: Center(
+          child: ListView(padding: EdgeInsets.zero,children: [
+            DrawerHeader(
+              child: Text('Drawer Header'), decoration: BoxDecoration(
+              color: Colors.blue,
+              ),
+            ),
+            ListTile(
+            title: Text('Item 1'),
+            onTap: () {
+              Logger("Item 1", "Item 1 click");
+            },
+          ),ListTile(
+            title: Text('close'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),Text("4"),Text("5")],),
+        ),
       ),
 
       body: new Builder(builder: (BuildContext context) {

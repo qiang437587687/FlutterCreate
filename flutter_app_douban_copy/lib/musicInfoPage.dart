@@ -80,10 +80,16 @@ class _MusicInfoState extends State<MusicInfo> {
           this.shape = BoxShape.rectangle,
         *
         * */
-
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
-                       child: DecoratedBox(decoration: BoxDecoration(color: Colors.transparent,borderRadius: BorderRadius.all(const Radius.circular(8.0)))),
+        BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: Colors.transparent),
+          ),
         ),
+
+//        BackdropFilter(filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+//          child: DecoratedBox(decoration: BoxDecoration(color: Colors.transparent)),
+//        ),
 
         Center(
           child: Container(
@@ -100,6 +106,7 @@ class _MusicInfoState extends State<MusicInfo> {
                       pinned: true,
                       expandedHeight: _appBarHeight,
                       backgroundColor: Colors.transparent,
+                      automaticallyImplyLeading:true, //这个是返回的想做的箭头。 true 有 false 没有
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(result.name ?? "名字暂缺"),
                         background: Stack(
@@ -120,12 +127,12 @@ class _MusicInfoState extends State<MusicInfo> {
                       snap: false,
 
                     ),
-                  
+
                   SliverPadding(
                       padding: const EdgeInsets.all(4.0),
                       sliver: SliverList(delegate: SliverChildListDelegate(_getCommentList())),
                   )
-                
+
               ],
             ),
 
@@ -244,16 +251,12 @@ class _MusicInfoState extends State<MusicInfo> {
         },
           itemCount: items.length,
         ),
-
       );
 
     }
 
     );
   }
-
-
-
 
 }
 
