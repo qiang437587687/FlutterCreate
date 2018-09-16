@@ -13,6 +13,7 @@ import 'package:flutter_app_douban_copy/PageiOSItem.dart';
 import 'package:flutter_app_douban_copy/valueAndPageNav.dart';
 import 'package:flutter_app_douban_copy/pushTest.dart';
 import 'package:flutter_app_douban_copy/musicPage.dart';
+import 'package:flutter_app_douban_copy/cutAndGaussianBlur.dart';
 
 void main() => runApp(new MyApp());
 
@@ -217,6 +218,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
         textSection,
 
+        Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToVatAndGaussianBlur,titleString: "截图和高斯模糊",),),
+
         Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToValueTransform,titleString: "点击测试传值传值传值传值",),),
 
         Padding(padding: const EdgeInsets.all(8.0),child: ButtonNavToPage(voidCallback: _navigationToTestPage,titleString: "点击测试界面",),),
@@ -316,6 +319,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       new MaterialPageRoute(builder: (context) => new SecondScreen()),
     );
   }
+
+  _navigationToVatAndGaussianBlur() { //截图和高斯模糊
+    Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new CutAndGaussianBlur()),
+    );
+  }
+
 
   _navigationToValueTransform() { //PlatformChannel
     Navigator.push(
