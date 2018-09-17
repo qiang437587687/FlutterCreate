@@ -14,29 +14,24 @@ import 'package:flutter/services.dart';//导入网络请求相关的包
 import 'package:flutter_app_douban_copy/Const.dart';
 import 'package:flutter_app_douban_copy/toolsTimer.dart';
 
-
+import "package:flutter_app_douban_copy/dispaly.dart";
 
 class CutAndGaussianBlur extends StatefulWidget {
   @override
   _CutAndGaussianBlurState createState() => _CutAndGaussianBlurState();
 }
 
-class _CutAndGaussianBlurState extends State<CutAndGaussianBlur> {
+class _CutAndGaussianBlurState extends State<CutAndGaussianBlur> with SingleTickerProviderStateMixin {
   GlobalKey globalKey = new GlobalKey();
 
-  // 截图boundary，并且返回图片的二进制数据。
-  Future<Uint8List> _capturePng() async {
-    RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage();
-    // 注意：png是压缩后格式，如果需要图片的原始像素数据，请使用rawRgba
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
-    return pngBytes;
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+
+    initScreen(context); //获取全局的宽度高度。
+    return Container(
+      child: Text("CutAndGaussianBlur"),
+    );
   }
 }
 
