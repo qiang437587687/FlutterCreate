@@ -446,3 +446,47 @@ class HomeBottomBtn extends StatelessWidget {
     );
   }
 }
+
+
+
+  Widget _secondPage() {
+    return Opacity(
+      opacity: _second ? 1.0 : 0.0,
+      child: new BackdropFilter(
+        filter: new ui.ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+        child: Opacity(
+          opacity: secondOpacity,
+          child: Container(
+            color: Colors.black.withOpacity(0.01),
+            child: new Center(
+              child: new RichText(
+                text: new TextSpan(
+                  children: <TextSpan>[
+                    new TextSpan(
+                        text: "\n${surplusAmountToday.toStringAsFixed(2)}",
+                        style: new TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                          fontSize: 48.0,
+                        )),
+                    new TextSpan(
+                        text: "\n今日剩余",
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        )),
+                  ],
+                  text: currencyName,
+                  style: new TextStyle(
+                      fontSize: 18.0,
+                      decoration: TextDecoration.none,
+                      color: Colors.orange),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
