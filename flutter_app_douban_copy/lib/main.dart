@@ -482,9 +482,8 @@ class ButtonNavToPage extends StatelessWidget {
 
 class ChangeBackgroundButton extends StatelessWidget {
 
-  ChangeBackgroundButton({Key key,@required this.normalImagePath, @required BoolCallback this.bCallback, this.selectImagePath}) : super(key: key);
+  ChangeBackgroundButton({Key key, @required BoolCallback this.bCallback, this.selectImagePath}) : super(key: key);
 
-  final String normalImagePath;
   final String selectImagePath;
   final BoolCallback bCallback;
   final isNormal = true;

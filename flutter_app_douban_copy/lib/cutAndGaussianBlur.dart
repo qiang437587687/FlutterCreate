@@ -122,31 +122,6 @@ class _CutAndGaussianBlurState extends State<CutAndGaussianBlur> with SingleTick
                           color: Colors.white,
                           fontSize: 18.0,
                         )),
-                    new TextSpan(
-                        text: "\n今日剩余",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        )),
-                    new TextSpan(
-                        text: "\n今日剩余",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        )),
-                    new TextSpan(
-                        text: "\n今日剩余",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        )),
-                    new TextSpan(
-                        text: "\n今日剩余",
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                        )),
-
                   ],
                   text: currencyName,
                   style: new TextStyle(
