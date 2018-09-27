@@ -14,6 +14,8 @@ import 'package:flutter_app_douban_copy/valueAndPageNav.dart';
 import 'package:flutter_app_douban_copy/pushTest.dart';
 import 'package:flutter_app_douban_copy/musicPage.dart';
 import 'package:flutter_app_douban_copy/cutAndGaussianBlur.dart';
+import 'package:flutter_app_douban_copy/bookPage.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -105,10 +107,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       appBar: AppBar(
         title: Text(_topAndBottomTitle(index), style: style,),
         bottom: _movieTab(),
-        leading: new IconButton(icon: new AnimatedIcon(icon: AnimatedIcons.close_menu,progress: controller.view,), onPressed: (){
-          controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
-          Logger("current isPanelVisible", isPanelVisible);
-        }),
+//        leading: new IconButton(icon: new AnimatedIcon(icon: AnimatedIcons.close_menu,progress: controller.view,), onPressed: (){
+//          controller.fling(velocity: isPanelVisible ? -1.0 : 1.0);
+//          Logger("current isPanelVisible", isPanelVisible);
+//        }),
       ),
 
       drawer: Drawer(
@@ -158,7 +160,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       case 1:
         return "音乐";
       case 2:
-        return "未知的";
+        return "图书";
 
     }
   }
@@ -178,7 +180,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   _movieTab() { //这个是上面的appbar的bottom
 
-    if (index == 1) { //这样来调节上面的 Navigation 里面的Tab；
+    if (index != 0) { //这样来调节上面的 Navigation 里面的Tab；
       return null;
     }
 
@@ -195,6 +197,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     switch (index) {
       case 1:
         return myCopyMusicPage();
+
+      case 2:
+        return myCopyBookPage();
 
       default:
         return myCostumeMothod();
@@ -456,6 +461,11 @@ Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese Alps. Situate
   Widget myCopyMusicPage() {
     return MusicPage();
   }
+
+  Widget myCopyBookPage() {
+    return BookPage();
+  }
+
 
 }
 
