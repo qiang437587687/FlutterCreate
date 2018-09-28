@@ -113,7 +113,7 @@ class BookPageState extends State<BookPage> {
               SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 5.0,
-                   mainAxisSpacing: 5.0,
+                  mainAxisSpacing: 5.0,
                   childAspectRatio: 0.7,
               )
 
@@ -226,58 +226,50 @@ class BookItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new GestureDetector(
-      onTap: () {
-        _onclick(context);
-      },
+    // 写一下卡片
+    return GestureDetector(
+      onTap: _onclick(context), //试一下这样点击会不会有问题
       child: Card(
         child: Stack(
           children: <Widget>[
             Image.network(
               book.imageAddress,
             ),
+            
             DecoratedBox(
-              decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    center: const Alignment(0.0, -0.5),
-                    colors: <Color>[
-                      const Color(0x00000000),
-                      const Color(0x70000000),
-                    ],
-                    radius: 0.60,
-                    stops: <double>[0.3, 1.0],
-                  )),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      book.name,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .title
-                          .copyWith(color: Colors.white),
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      book.author,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .subhead
-                          .copyWith(color: Colors.white, fontSize: 10.0),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _getRatings(),
-                  ),
-                ],
-              ),
-            )
+                decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                    colors: [
+                                      const Color(0x00000000),
+                                      const Color(0x70000000),
+//                                            Colors.red,
+//                                            Colors.yellow,
+//                                            Colors.blue
+                                            ],
+                                  center: const Alignment(0.0, -0.5),
+                                  stops: <double>[0.0, 0.5],
+
+                                ),
+
+                            ),
+                child: Opacity(opacity: 0.6,child:
+                  Column(
+
+                  mainAxisAlignment: MainAxisAlignment.end, //主列 column上下为主。
+                  crossAxisAlignment: CrossAxisAlignment.center,
+
+                  children: <Widget>[
+                    Center(
+                      child: Text(book.name, style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),),),
+
+                    Center(child: Text(book.author ,style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white, fontSize: 10.0), ),),
+
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: _getRatings(),),
+
+                  ],),
+                ),
+            ),
+            
           ],
         ),
       ),
