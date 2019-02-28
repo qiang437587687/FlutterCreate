@@ -375,7 +375,7 @@ class RefreshLayoutState extends State<RefreshLayout>
     _positionController
         .animateTo(1.0 / _kDragSizeFactorLimit,
             duration: _kIndicatorSnapDuration)
-        .then<void>((Null value) {
+        .then<void>((value) {
       if (mounted && _mode == _RefreshLayoutMode.snap) {
         assert(widget.onRefresh != null);
         setState(() {
